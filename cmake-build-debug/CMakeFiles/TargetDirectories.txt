@@ -1,3 +1,0 @@
-/home/msaad/CLionProjects/FlappyBird/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/msaad/CLionProjects/FlappyBird/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/msaad/CLionProjects/FlappyBird/cmake-build-debug/CMakeFiles/sfmlapp.dir

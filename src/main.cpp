@@ -12,6 +12,9 @@ int main()
 	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Default);
 	window.setFramerateLimit(360);
 
+    Texture backgroundImage;
+    backgroundImage.loadFromFile("../assets/background.png");
+    Sprite background(backgroundImage);
 	// Load flappy and pipe
 	loadFlappy();
 	loadPipe();
@@ -112,8 +115,8 @@ int main()
 			// draw bird and pipes
 
 			window.clear();
+            window.draw(background);
 			window.draw(flappy.sprite);
-
 			for (auto i : pipes)
 			{
 				window.draw(i);

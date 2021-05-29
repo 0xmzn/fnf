@@ -52,7 +52,7 @@ void handleEvent(RenderWindow& window, Event& event)
 void displayTitle(RenderWindow& window)
 {
 	Font font;
-	font.loadFromFile("assets/font.ttf");
+	font.loadFromFile("../assets/font.ttf");
 	Text title;
 	title.setFont(font);
 	title.setOutlineThickness(5);
@@ -65,11 +65,11 @@ void displayTitle(RenderWindow& window)
 }
 
 // Function to display Background
-// We could add a string parameter to the function to chose which background to draw
+// We could add a string parameter to the function to choose which background to draw
 void displayBackground(RenderWindow& window)
 {
 	Texture backgroundImage;
-	backgroundImage.loadFromFile("assets/background.png");
+	backgroundImage.loadFromFile("../assets/background.png");
 	Sprite background(backgroundImage);
 	window.draw(background);
 }
@@ -78,7 +78,7 @@ void displayBackground(RenderWindow& window)
 void displayIntroBird(RenderWindow& window)
 {
 	Texture bird;
-	bird.loadFromFile("assets/bird.png");
+	bird.loadFromFile("../assets/bird.png");
 	Sprite flappyBird(bird);
 	flappyBird.setPosition(WID - 50, HEI + 200);
 	flappyBird.setScale(3.0f, 3.0f);
@@ -90,7 +90,7 @@ void displayMenu(RenderWindow& window)
 {
 	window.clear();
 	Font font;
-	font.loadFromFile("assets/font.ttf");
+	font.loadFromFile("../assets/font.ttf");
 	Text text;
 	text.setFont(font);
 	text.setOutlineThickness(3);

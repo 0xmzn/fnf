@@ -24,8 +24,8 @@ vector<Sprite> pipes;
 
 void loadPipe()
 {
-	pipeUp.texture.loadFromFile("assets/pipe.png");
-	pipeDown.texture.loadFromFile("assets/pipe.png");
+	pipeUp.texture.loadFromFile("../assets/pipe.png");
+	pipeDown.texture.loadFromFile("../assets/pipe.png");
 	pipeUp.sprite.setTexture(pipeUp.texture);
 	pipeDown.sprite.setTexture(pipeDown.texture);
 }

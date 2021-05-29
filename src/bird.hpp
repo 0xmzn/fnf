@@ -18,9 +18,9 @@ Flappy flappy;
 
 void loadFlappy() {
 
-	flappy.texture[0].loadFromFile("assets/bird.png");
-	flappy.texture[1].loadFromFile("assets/bird.png");
-	flappy.texture[2].loadFromFile("assets/bird.png");
+	flappy.texture[0].loadFromFile("../assets/bird.png");
+	flappy.texture[1].loadFromFile("../assets/bird.png");
+	flappy.texture[2].loadFromFile("../assets/bird.png");
 	flappy.sprite.setScale(2, 2);
 	flappy.sprite.setTexture(flappy.texture[1]);
 	flappy.sprite.setPosition(flappy.x, flappy.y);
