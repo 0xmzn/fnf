@@ -8,126 +8,129 @@ using namespace std;
 
 int main()
 {
-	// Create a window
-	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Default);
-	window.setFramerateLimit(360);
-
+    // Create a window
+    RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Default);
+    window.setFramerateLimit(360);
     Texture backgroundImage;
     backgroundImage.loadFromFile("../assets/background.png");
     Sprite background(backgroundImage);
-	// Load flappy and pipe
-	loadFlappy();
-	loadPipe();
 
-	// Game Loop
-	while (window.isOpen())
-	{
-		Event event;
-		handleEvent(window, event);
+    // Load flappy and pipe
+    loadFlappy();
+    loadPipe();
 
-		// Startscreen or if esc is pressed
+    int frameRate = 150, gap = 250;
 
-		if (gameLevel == 0)
-		{
-			displayMenu(window);
-		}
+    // Game Loop
+    while (window.isOpen())
+    {
+        Event event;
+        handleEvent(window, event);
 
-		// Case easy
-		if (gameLevel == 1)
-		{
-			// displayBackground(window); --> doesnt work?
-			// generate pipes
-			if (frames % 150 == 0)
-			{
-				// dark magic
-				int random = rand() % 100 + 250, gap = 150;
+        // Startscreen or if esc is pressed
 
-				// set position of new pipes
-				positionPipe(random, gap);
+        if (gameLevel == 0)
+        {
+            displayMenu(window);
+        }
 
-				// push pipes to the vector
-				pipes.push_back(pipeDown.sprite);
-				pipes.push_back(pipeUp.sprite);
-			}
+        // Case easy
+        if (gameLevel == 1)
+        {
 
-			// simulate moving
-			for (auto itr = pipes.begin(); itr != pipes.end(); itr++)
-			{
-				(*itr).move(-3, 0);
-			}
+            // generate pipes
+            if (frames % frameRate == 0)
+            {
+                // dark magic
+                int random = rand() % 200 + 100;
 
-			// remove pipes offscreen
-			if (frames % 100 == 0)
-			{
-				auto startIterator = pipes.begin();
-				auto endIterator = pipes.begin();
+                // set position of new pipes
+                positionPipe(random, gap);
 
-				for (; endIterator != pipes.end(); endIterator++)
-				{
-					if ((*endIterator).getPosition().x > -104)
-					{
-						break;
-					}
-				}
+                // push pipes to the vector
+                pipes.push_back(pipeDown.sprite);
+                pipes.push_back(pipeUp.sprite);
+            }
 
-				pipes.erase(startIterator, endIterator);
-			}
+            // simulate moving
+            for (auto itr = pipes.begin(); itr != pipes.end(); itr++)
+            {
+                (*itr).move(-3, 0);
+            }
 
-			for (auto i : pipes)
-			{
+            // remove pipes offscreen
+            if (frames % 100 == 0)
+            {
+                auto startIterator = pipes.begin();
+                auto endIterator = pipes.begin();
 
-				float px, py, pw, ph;
+                for (; endIterator != pipes.end(); endIterator++)
+                {
+                    if ((*endIterator).getPosition().x > -104)
+                    {
+                        break;
+                    }
+                }
 
-				px = i.getPosition().x;
-				pw = 150 * i.getScale().x; // pipe width
+                pipes.erase(startIterator, endIterator);
+            }
 
-				if (i.getScale().y > 0)
-				{
-					py = i.getPosition().y;
-					ph = 800 * i.getScale().y; // pipe height
-				}
-				else
-				{
-					ph = -800 * i.getScale().y; // pipe height
-					py = i.getPosition().y - ph;
-				}
+            for (auto i : pipes)
+            {
 
-				if (isColliding(flappy.sprite.getPosition().x, flappy.sprite.getPosition().y, flappy.sprite.getScale().x, flappy.sprite.getScale().y, px, py, pw, ph))
-				{
-					flappy.isAlive = false;
-				}
-			}
+                float px, py, pw, ph;
 
-			if (flappy.sprite.getPosition().y >= 700 || !flappy.isAlive)
-			{
-				flappy.isAlive = 0;
-				//	add gameOver screen
-				break;
-			}
+                px = i.getPosition().x;
+                pw = 150 * i.getScale().x; // pipe width
 
-			// gravity effect
-			if (flappy.isAlive)
-			{
-				flappy.velocity += flappy.gravAcc;
-				flappy.sprite.move(0, flappy.velocity);
-			}
+                if (i.getScale().y > 0)
+                {
+                    py = i.getPosition().y;
+                    ph = 800 * i.getScale().y; // pipe height
+                }
+                else
+                {
+                    ph = -800 * i.getScale().y; // pipe height
+                    py = i.getPosition().y - ph;
+                }
 
-			// draw bird and pipes
+                if (isColliding(flappy.sprite.getPosition().x, flappy.sprite.getPosition().y, flappy.sprite.getScale().x, flappy.sprite.getScale().y, px, py, pw, ph))
+                {
+                    flappy.isAlive = false;
+                }
+            }
 
-			window.clear();
+            if (flappy.sprite.getPosition().y >= 700 || !flappy.isAlive)
+            {
+                flappy.isAlive = 0;
+                //	add gameOver screen
+                break;
+            }
+
+            // gravity effect
+            if (flappy.isAlive)
+            {
+                flappy.velocity += flappy.gravAcc;
+                flappy.sprite.move(0, flappy.velocity);
+            }
+
+            // draw bird and pipes
+
+            window.clear();
             window.draw(background);
-			window.draw(flappy.sprite);
-			for (auto i : pipes)
-			{
-				window.draw(i);
-			}
+            window.draw(flappy.sprite);
 
-			window.display();
+            for (auto i : pipes)
+            {
+                window.draw(i);
+            }
 
-			// increment frames
-			frames++;
-		}
-	}
+            window.display();
 
-	return 0;
+            // increment frames
+            frames++;
+        }
+    }
+
+    return 0;
 }

@@ -103,7 +103,6 @@ void displayMenu(RenderWindow& window)
 	displayTitle(window);
 	displayIntroBird(window);
 	window.draw(text);
-	window.display();
 }
 
 #endif // displayingEvents_H
