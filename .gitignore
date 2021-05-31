@@ -10,7 +10,9 @@ Makefile
 *.stats
 Thumbs.db
 .DS_Store
-
+/src/Platform
+/src/Utility
+/src/PCH.hpp
 # VS Code
 .vscode/ipch
 .clang-format

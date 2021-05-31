@@ -39,7 +39,6 @@ int main()
 			if (gameLevel == 1)
 			{
 				frameRate = 200;
-
 				gap = 250;
 			}
 			// medium
@@ -68,7 +67,7 @@ int main()
 				pipes.push_back(pipeDown.sprite);
 				pipes.push_back(pipeUp.sprite);
 			}
-
+            
 			// simulate moving
 			for (auto itr = pipes.begin(); itr != pipes.end(); itr++)
 			{
