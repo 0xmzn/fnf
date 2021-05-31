@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	// Create a window
-	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Default);
+	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Close);
 	window.setFramerateLimit(360);
 	Texture backgroundImage;
 	backgroundImage.loadFromFile("assets/background.png");
@@ -94,7 +94,7 @@ int main()
 			for (auto i : pipes)
 			{
 				float px, py, pw, ph;
-				float fx = flappy.sprite.getPosition().x, fy = flappy.sprite.getPosition().y;			//
+				float fx = flappy.sprite.getPosition().x, fy = flappy.sprite.getPosition().y;
 				float fw = 259.0 * flappy.sprite.getScale().x, fh = 253.0 * flappy.sprite.getScale().y; // bird width and high scaled
 
 				px = i.getPosition().x;
