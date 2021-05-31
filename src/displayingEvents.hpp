@@ -1,6 +1,7 @@
 #ifndef displayingEvents_H
 #define displayingEvents_H
 #include "bird.hpp"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;

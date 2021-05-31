@@ -1,6 +1,7 @@
 #include "bird.hpp"
 #include "displayingEvents.hpp"
 #include "pipe.hpp"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <bits/stdc++.h>
 using namespace sf;
@@ -32,7 +33,7 @@ int main()
 		if (gameLevel == 0)
 		{
 			// reset
-			frameRate = 150, gap = 225;
+			frameRate = 150, gap = 225, flappy.isAlive = 1;
 			pipes.clear();
 			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
 			flappy.sprite.setPosition(flappy.x, flappy.y);
@@ -40,6 +41,9 @@ int main()
 		}
 		else
 		{
+			// stop sound
+			flappy.collide.stop();
+
 			// easy
 			if (gameLevel == 1)
 			{
