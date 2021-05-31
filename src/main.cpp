@@ -7,6 +7,8 @@
 using namespace sf;
 using namespace std;
 
+bool isGameover = false;
+
 int main()
 {
 	// Create a window
@@ -32,12 +34,30 @@ int main()
 
 		if (gameLevel == 0)
 		{
-			// reset
-			frameRate = 150, gap = 225, flappy.isAlive = 1;
-			pipes.clear();
-			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
-			flappy.sprite.setPosition(flappy.x, flappy.y);
-			displayMenu(window);
+			// Displays Game Over Screen if isGameover flag is true
+			if (isGameover)
+			{
+				displayGameover(window);
+				// reset
+				frameRate = 150, gap = 225, flappy.isAlive = 1;
+				pipes.clear();
+				flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
+				flappy.sprite.setPosition(flappy.x, flappy.y);
+				if(event.key.code == Keyboard::Key::Escape)
+				{
+					isGameover = false;
+				}
+			}
+			// Displays Main Menu Screen if isGameover flag is false
+			else
+			{
+				// reset
+				frameRate = 150, gap = 225, flappy.isAlive = 1;
+				pipes.clear();
+				flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
+				flappy.sprite.setPosition(flappy.x, flappy.y);
+				displayMenu(window);
+			}
 		}
 		else
 		{
@@ -133,6 +153,7 @@ int main()
 				gameLevel = 0;
 				flappy.isAlive = 0;
 				flappy.collide.play();
+				isGameover = true;
 				continue;
 			}
 

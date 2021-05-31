@@ -106,4 +106,23 @@ void displayMenu(RenderWindow& window)
 	window.display();
 }
 
+// Function to display Game over Screen
+void displayGameover(RenderWindow& window)
+{
+	window.clear();
+	Font font;
+	font.loadFromFile("assets/font.ttf");
+	Text text;
+	text.setFont(font);
+	text.setOutlineThickness(3);
+	text.setOutlineColor(Color::Black);
+	text.setString("Game Over");
+	text.setCharacterSize(130);
+	text.setFillColor(Color::White);
+	text.setPosition(WID - 330, HEI - 300);
+	displayBackground(window);
+	window.draw(text);
+	window.display();
+}
+
 #endif // displayingEvents_H
