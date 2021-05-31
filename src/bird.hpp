@@ -16,12 +16,13 @@ struct Flappy
 
 Flappy flappy;
 
-void loadFlappy() {
+void loadFlappy()
+{
 
 	flappy.texture[0].loadFromFile("assets/gnu.png");
 	flappy.texture[1].loadFromFile("assets/gnu.png");
 	flappy.texture[2].loadFromFile("assets/gnu.png");
-	flappy.sprite.setScale(0.3, 0.3);
+	flappy.sprite.setScale(0.3f, 0.3f);
 	flappy.sprite.setTexture(flappy.texture[1]);
 	flappy.sprite.setPosition(flappy.x, flappy.y);
 }

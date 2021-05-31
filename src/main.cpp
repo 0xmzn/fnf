@@ -67,12 +67,11 @@ int main()
 				pipes.push_back(pipeDown.sprite);
 				pipes.push_back(pipeUp.sprite);
 			}
-            
+
 			// simulate moving
 			for (auto itr = pipes.begin(); itr != pipes.end(); itr++)
 			{
 				(*itr).move(-3, 0);
-
 			}
 
 			// remove pipes offscreen
@@ -95,6 +94,8 @@ int main()
 			for (auto i : pipes)
 			{
 				float px, py, pw, ph;
+				float fx = flappy.sprite.getPosition().x, fy = flappy.sprite.getPosition().y;			//
+				float fw = 259.0 * flappy.sprite.getScale().x, fh = 253.0 * flappy.sprite.getScale().y; // bird width and high scaled
 
 				px = i.getPosition().x;
 				pw = 150 * i.getScale().x; // pipe width
@@ -110,7 +111,7 @@ int main()
 					py = i.getPosition().y - ph;
 				}
 
-				if (isColliding(flappy.sprite.getPosition().x, flappy.sprite.getPosition().y, flappy.sprite.getScale().x, flappy.sprite.getScale().y, px, py, pw, ph))
+				if (isColliding(fx, fy, fw, fh, px, py, pw, ph))
 				{
 					flappy.isAlive = false;
 				}
