@@ -11,6 +11,8 @@ struct Flappy
 	const float gravAcc = 0.010;
 	const float jumpAcc = -1;
 	Sprite sprite;
+	SoundBuffer jumpBuffer, collideBuffer;
+	Sound jump, collide;
 	Texture texture[3];
 };
 
@@ -25,5 +27,9 @@ void loadFlappy()
 	flappy.sprite.setScale(0.3f, 0.3f);
 	flappy.sprite.setTexture(flappy.texture[1]);
 	flappy.sprite.setPosition(flappy.x, flappy.y);
+	flappy.jumpBuffer.loadFromFile("audio/flap.wav");
+	flappy.jump.setBuffer(flappy.jumpBuffer);
+	flappy.collideBuffer.loadFromFile("audio/gameover.wav");
+	flappy.collide.setBuffer(flappy.collideBuffer);
 }
 #endif // bird_H

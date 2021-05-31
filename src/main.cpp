@@ -31,6 +31,11 @@ int main()
 
 		if (gameLevel == 0)
 		{
+			// reset
+			frameRate = 150, gap = 225;
+			pipes.clear();
+			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
+			flappy.sprite.setPosition(flappy.x, flappy.y);
 			displayMenu(window);
 		}
 		else
@@ -91,6 +96,7 @@ int main()
 				pipes.erase(startIterator, endIterator);
 			}
 
+			// test collision
 			for (auto i : pipes)
 			{
 				float px, py, pw, ph;
@@ -117,12 +123,13 @@ int main()
 				}
 			}
 
+			// stop game and return to main menu
 			if (flappy.sprite.getPosition().y >= 700 || !flappy.isAlive)
 			{
+				gameLevel = 0;
 				flappy.isAlive = 0;
-
-				//	add gameOver screen
-				break;
+				flappy.collide.play();
+				continue;
 			}
 
 			// gravity effect

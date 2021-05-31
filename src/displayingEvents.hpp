@@ -12,7 +12,6 @@ const float HEI = 384;
 int frames = 0;
 int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
 
-
 // Function to handle Events
 void handleEvent(RenderWindow& window, Event& event)
 {
@@ -25,11 +24,11 @@ void handleEvent(RenderWindow& window, Event& event)
 				break;
 			case Event::KeyPressed:
 				if (Keyboard::isKeyPressed(Keyboard::E))
-					gameLevel += 1;
+					gameLevel = 1;
 				else if (Keyboard::isKeyPressed(Keyboard::M))
-					gameLevel += 500;
+					gameLevel = 500;
 				else if (Keyboard::isKeyPressed(Keyboard::H))
-					gameLevel += 999;
+					gameLevel = 999;
 				else if (Keyboard::isKeyPressed(Keyboard::Escape))
 					gameLevel = 0;
 				else if (Keyboard::isKeyPressed(Keyboard::Q))
@@ -38,10 +37,10 @@ void handleEvent(RenderWindow& window, Event& event)
 			case Event::KeyReleased:
 				if (event.key.code == Keyboard::Key::Up)
 				{
-					// std::cout << flappy.velocity << std::endl;
-					//flap.play();
+
 					flappy.velocity = flappy.jumpAcc;
 					flappy.sprite.move(0, flappy.velocity);
+					flappy.jump.play();
 					break;
 				}
 		}
