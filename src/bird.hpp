@@ -1,6 +1,7 @@
 #ifndef bird_H
 #define bird_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 using namespace sf;
 using namespace std;
 
