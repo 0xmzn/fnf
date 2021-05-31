@@ -14,7 +14,7 @@ int frames = 0;
 int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
 
 // Function to handle Events
-void handleEvent(RenderWindow& window, Event& event, bool& pause)
+void handleEvent(RenderWindow& window, Event& event, bool& isPaused)
 {
 	while (window.pollEvent(event))
 	{
@@ -31,11 +31,14 @@ void handleEvent(RenderWindow& window, Event& event, bool& pause)
 				else if (Keyboard::isKeyPressed(Keyboard::H))
 					gameLevel = 999;
 				else if (Keyboard::isKeyPressed(Keyboard::Escape))
+				{
 					gameLevel = 0;
+					isPaused = false;
+				}
 				else if (Keyboard::isKeyPressed(Keyboard::Q))
 					window.close();
 				else if (Keyboard::isKeyPressed(Keyboard::P))
-					pause = !pause;
+					isPaused = !isPaused;
 				break;
 			case Event::KeyReleased:
 				if (event.key.code == Keyboard::Key::Up)
