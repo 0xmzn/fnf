@@ -13,6 +13,6 @@ Thumbs.db
 
 # VS Code
 .vscode/ipch
-
+.clang-format
 # Project specific
 
