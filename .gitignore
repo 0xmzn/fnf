@@ -1,10 +1,11 @@
 # Ignore everything
-*
+/*
+/*/
 
-# But not these files...
+# But not these
 !.gitignore
+!README.md
+!/src/*
+!/assets/*
+!/audio/*
 
-# not these subdirectories
-!*/src/*
-!*/assets/*
-!*/audio/*
