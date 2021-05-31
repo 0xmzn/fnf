@@ -1,0 +1,18 @@
+# Build system
+bin
+build
+env
+lib
+test
+gmon.out
+build.sh
+Makefile
+*.stats
+Thumbs.db
+.DS_Store
+
+# VS Code
+.vscode/ipch
+
+# Project specific
+
