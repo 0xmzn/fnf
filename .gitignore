@@ -1,11 +1,18 @@
-# Ignore everything
+# Blacklist files/folders in same directory as the .gitignore file
 /*
-/*/
 
-# But not these
+# Whitelist some files
 !.gitignore
 !README.md
-!/src/*
-!/assets/*
-!/audio/*
+
+# Whitelist subdirectories 
+!assets/
+!audio/
+!src/
+
+# Ignore these
+**/.DS_Store
+**/PCH.hpp
+**.log
+
 
