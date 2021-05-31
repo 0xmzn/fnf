@@ -14,7 +14,7 @@ int frames = 0;
 int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
 
 // Function to handle Events
-void handleEvent(RenderWindow& window, Event& event)
+void handleEvent(RenderWindow& window, Event& event, bool& pause)
 {
 	while (window.pollEvent(event))
 	{
@@ -34,6 +34,8 @@ void handleEvent(RenderWindow& window, Event& event)
 					gameLevel = 0;
 				else if (Keyboard::isKeyPressed(Keyboard::Q))
 					window.close();
+				else if (Keyboard::isKeyPressed(Keyboard::P))
+					pause = !pause;
 				break;
 			case Event::KeyReleased:
 				if (event.key.code == Keyboard::Key::Up)
@@ -72,6 +74,22 @@ void displayBackground(RenderWindow& window)
 	backgroundImage.loadFromFile("assets/background.png");
 	Sprite background(backgroundImage);
 	window.draw(background);
+}
+
+// Function to display Pause Screen
+void displayPause(RenderWindow& window)
+{
+	Font font;
+	font.loadFromFile("assets/font.ttf");
+	Text pause;
+	pause.setFont(font);
+	pause.setOutlineThickness(5);
+	pause.setOutlineColor(Color::Black);
+	pause.setString("Game Paused");
+	pause.setCharacterSize(130);
+	pause.setFillColor(Color::White);
+	pause.setPosition(WID - 410, HEI - 300);
+	window.draw(pause);
 }
 
 // Function to display the bird in the main menu
