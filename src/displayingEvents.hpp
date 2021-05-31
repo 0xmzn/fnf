@@ -1,4 +1,3 @@
-
 #ifndef displayingEvents_H
 #define displayingEvents_H
 #include "bird.hpp"
@@ -12,6 +11,7 @@ const float WID = 512;
 const float HEI = 384;
 int frames = 0;
 int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
+
 
 // Function to handle Events
 void handleEvent(RenderWindow& window, Event& event)
@@ -39,7 +39,7 @@ void handleEvent(RenderWindow& window, Event& event)
 				if (event.key.code == Keyboard::Key::Up)
 				{
 					// std::cout << flappy.velocity << std::endl;
-
+					//flap.play();
 					flappy.velocity = flappy.jumpAcc;
 					flappy.sprite.move(0, flappy.velocity);
 					break;
@@ -52,7 +52,7 @@ void handleEvent(RenderWindow& window, Event& event)
 void displayTitle(RenderWindow& window)
 {
 	Font font;
-	font.loadFromFile("../assets/font.ttf");
+	font.loadFromFile("assets/font.ttf");
 	Text title;
 	title.setFont(font);
 	title.setOutlineThickness(5);
@@ -65,11 +65,11 @@ void displayTitle(RenderWindow& window)
 }
 
 // Function to display Background
-// We could add a string parameter to the function to choose which background to draw
+// We could add a string parameter to the function to chose which background to draw
 void displayBackground(RenderWindow& window)
 {
 	Texture backgroundImage;
-	backgroundImage.loadFromFile("../assets/background.png");
+	backgroundImage.loadFromFile("assets/background.png");
 	Sprite background(backgroundImage);
 	window.draw(background);
 }
@@ -78,10 +78,10 @@ void displayBackground(RenderWindow& window)
 void displayIntroBird(RenderWindow& window)
 {
 	Texture bird;
-	bird.loadFromFile("../assets/bird.png");
+	bird.loadFromFile("assets/gnu.png");
 	Sprite flappyBird(bird);
 	flappyBird.setPosition(WID - 50, HEI + 200);
-	flappyBird.setScale(3.0f, 3.0f);
+	flappyBird.setScale(0.5f, 0.5f);
 	window.draw(flappyBird);
 }
 
@@ -90,7 +90,7 @@ void displayMenu(RenderWindow& window)
 {
 	window.clear();
 	Font font;
-	font.loadFromFile("../assets/font.ttf");
+	font.loadFromFile("assets/font.ttf");
 	Text text;
 	text.setFont(font);
 	text.setOutlineThickness(3);
