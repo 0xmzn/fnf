@@ -13,5 +13,6 @@ int score = 0;
 int userHighScore = 0;
 bool isGameover = false;
 bool isPaused = false;
+bool isMuted = false;
 
 #endif // definitions_H

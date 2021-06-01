@@ -10,52 +10,66 @@ using namespace sf;
 using namespace std;
 
 // Function to handle Events
-void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGameover)
+void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGameover)
 {
 	while (window.pollEvent(event))
 	{
 		switch (event.type)
 		{
-			case Event::Closed:
-				window.close();
-				break;
-
-			case Event::KeyPressed:
-				if (Keyboard::isKeyPressed(Keyboard::Q))
-					window.close();
-				if (isGameover)
+		case Event::Closed:
+			window.close();
+			break;
+		// Toggle Deafen
+		case Event::KeyPressed:
+			if (Keyboard::isKeyPressed(Keyboard::D))
+			{
+				isMuted = !isMuted;
+				if (isMuted)
 				{
-					gameLevel = 0;
+					flappy.collide.setVolume(0);
+					flappy.jump.setVolume(0);
 				}
 				else
 				{
-					if (Keyboard::isKeyPressed(Keyboard::E))
-						gameLevel = 1;
-					else if (Keyboard::isKeyPressed(Keyboard::M))
-						gameLevel = 500;
-					else if (Keyboard::isKeyPressed(Keyboard::H))
-						gameLevel = 999;
-					else if (Keyboard::isKeyPressed(Keyboard::Escape))
-					{
-						gameLevel = 0;
-						isPaused = false;
-					}
-					else if (Keyboard::isKeyPressed(Keyboard::P))
-					{
-						isPaused = !isPaused;
-						playPauseSound();
-					}
+					flappy.collide.setVolume(100);
+					flappy.jump.setVolume(100);
 				}
-				break;
-			case Event::KeyReleased:
-				if (event.key.code == Keyboard::Key::Up)
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Q))
+				window.close();
+			if (isGameover)
+			{
+				gameLevel = 0;
+			}
+			else
+			{
+				if (Keyboard::isKeyPressed(Keyboard::E))
+					gameLevel = 1;
+				else if (Keyboard::isKeyPressed(Keyboard::M))
+					gameLevel = 500;
+				else if (Keyboard::isKeyPressed(Keyboard::H))
+					gameLevel = 999;
+				else if (Keyboard::isKeyPressed(Keyboard::Escape))
 				{
-					flappy.velocity = flappy.jumpAcc;
-					flappy.sprite.move(0, flappy.velocity);
-					if (gameLevel != 0)
-						flappy.jump.play();
+					gameLevel = 0;
+					isPaused = false;
 				}
-				break;
+				else if (Keyboard::isKeyPressed(Keyboard::P))
+				{
+					isPaused = !isPaused;
+					playPauseSound();
+				}
+			}
+			break;
+		case Event::KeyReleased:
+			if (event.key.code == Keyboard::Key::Up)
+			{
+				flappy.velocity = flappy.jumpAcc;
+				flappy.sprite.move(0, flappy.velocity);
+				if (gameLevel != 0)
+					flappy.jump.play();
+			}
+			break;
 		}
 	}
 }
