@@ -14,5 +14,6 @@ int userHighScore = 0;
 bool isGameover = false;
 bool isPaused = false;
 bool isMuted = false;
+bool isHighscore = false;
 
 #endif // definitions_H

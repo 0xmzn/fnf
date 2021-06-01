@@ -26,6 +26,9 @@ int main()
 	backgroundImage.loadFromFile("assets/background.png");
 	Sprite background(backgroundImage);
 
+	// Create 3 txt files for each lvl if not created and write 0 in it, if created reset their values
+	txtHighscore();
+
 	// Game Loop
 	while (window.isOpen())
 	{
@@ -41,16 +44,17 @@ int main()
 			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
 			flappy.sprite.setPosition(flappy.x, flappy.y);
 
-			// Save Highscore
-			Highscore(score, userHighScore);
-
 			// Displays Game Over Screen if isGameover flag is true
 			if (isGameover)
 			{
-				displayGameover(window, score, userHighScore);
+				displayGameover(window, score, userHighScore, isHighscore);
 				if (event.key.code == Keyboard::Key::Escape)
 				{
+					//stop sounds while playing if the user pressed the escape button
+					flappy.jump.stop();
+					flappy.collide.stop();
 					isGameover = false;
+					isHighscore = false;
 				}
 			}
 			// Displays Main Menu Screen if isGameover flag is false
@@ -150,6 +154,8 @@ int main()
 					if (isColliding(fx, fy, fw, fh, px, py, pw, ph) || hitGround(fy))
 					{
 						flappy.isAlive = false;
+						// Save Highscore
+						Highscore(score, userHighScore, gameLevel, isHighscore);
 					}
 				}
 

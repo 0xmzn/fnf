@@ -150,7 +150,7 @@ void displayBoard(RenderWindow& window)
 }
 
 // Function to display Game over Screen
-void displayGameover(RenderWindow& window, int score, int usrHighScore)
+void displayGameover(RenderWindow& window, int score, int usrHighScore, bool isHighscore)
 {
 	window.clear();
 	Font font;
@@ -159,11 +159,20 @@ void displayGameover(RenderWindow& window, int score, int usrHighScore)
 	text.setFont(font);
 	text.setOutlineThickness(3);
 	text.setOutlineColor(Color::Black);
-	text.setString("Game Over");
-	text.setCharacterSize(130);
 	text.setFillColor(Color::White);
-	text.setPosition(WID - 325, HEI - 300);
-
+	
+	//High Score splash screen if there is a new high score
+	if(isHighscore){
+		text.setString("New High Score!");
+		text.setCharacterSize(100);
+		text.setPosition(WID - 395, HEI - 300);
+	}
+	else{
+		text.setString("Game Over");
+		text.setCharacterSize(130);
+		text.setPosition(WID - 325, HEI - 300);
+	}
+	
 	// Display userScore on Game Over screen
 	string strUserScore;
 	if (score > 99)
