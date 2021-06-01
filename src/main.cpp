@@ -12,7 +12,6 @@ bool isPaused = false;
 int main()
 {
 	int score = 0;
-	int userHighScore = 0;
 	// Create a window
 	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Close);
 	window.setFramerateLimit(360);
@@ -30,25 +29,14 @@ int main()
 	while (window.isOpen())
 	{
 		Event event;
-		handleEvent(window, event, isPaused, isGameover);
-
-		// Startscreen or if esc is pressed
-		if (gameLevel == 0)
-		{
-			// reset
-			frameRate = 150, gap = 225, flappy.isAlive = 1;
-			pipes.clear();
-			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
-			flappy.sprite.setPosition(flappy.x, flappy.y);
-		
-			// Save Highscore
-			Highscore(score, userHighScore);
-		
-			// Displays Game Over Screen if isGameover flag is true
-			if (isGameover)
 			{
-				displayGameover(window, score, userHighScore);
-				if(event.key.code == Keyboard::Key::Escape)
+				displayGameover(window);
+				frameRate = 150, gap = 225, flappy.isAlive = 1;
+				pipes.clear();
+				flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
+				flappy.sprite.setPosition(flappy.x, flappy.y);
+				if (event.key.code == Keyboard::Key::Escape)
+
 				{
 					isGameover = false;
 				}
@@ -57,10 +45,10 @@ int main()
 			else
 			{
 				displayMenu(window, score);
-			}	
+			}
 		}
 		else
-		{	
+		{
 			// Start Game if isPaused flag is false
 			if (!isPaused)
 			{
@@ -146,6 +134,23 @@ int main()
 					if (isColliding(fx, fy, fw, fh, px, py, pw, ph))
 					{
 						flappy.isAlive = false;
+					}
+				}
+
+				// count the score
+				for (auto i : pipes)
+				{
+					if (i.getPosition().x == gap)
+					{
+						score++;
+						/*sounds.ching.play();
+
+					if (game.score > game.highscore)
+					{
+						game.highscore = game.score;
+					}*/
+
+						break;
 					}
 				}
 
