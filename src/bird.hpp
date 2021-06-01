@@ -2,6 +2,7 @@
 #define bird_H
 #include "definitions.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 using namespace sf;
 struct Flappy
 {
