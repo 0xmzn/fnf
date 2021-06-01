@@ -32,13 +32,6 @@ bool hitGround(float y)
 	return false;
 }
 
-bool hitCeiling(float y)
-{
-	if (y <= -50)
-		return true;
-	return false;
-}
-
 void loadFlappy()
 {
 	flappy.texture[0].loadFromFile("assets/gnu.png"); // add animation

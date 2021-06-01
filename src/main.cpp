@@ -146,8 +146,8 @@ int main()
 						py = i.getPosition().y - ph;
 					}
 
-					// check colliding, ceiling and ground
-					if (isColliding(fx, fy, fw, fh, px, py, pw, ph) || hitGround(fy) || hitCeiling(fy))
+					// check colliding and ground
+					if (isColliding(fx, fy, fw, fh, px, py, pw, ph) || hitGround(fy))
 					{
 						flappy.isAlive = false;
 					}

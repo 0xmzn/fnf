@@ -63,11 +63,19 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
 			break;
 		case Event::KeyReleased:
 			if (event.key.code == Keyboard::Key::Up)
-			{
-				flappy.velocity = flappy.jumpAcc;
-				flappy.sprite.move(0, flappy.velocity);
-				if (gameLevel != 0)
-					flappy.jump.play();
+			{	
+				// if isPaused flag is true ignore the Up command
+				if (!isPaused)
+				{
+					flappy.velocity = flappy.jumpAcc;
+					// Prevent going out of frame
+					if (flappy.sprite.getPosition().y + flappy.velocity < 0)
+						flappy.sprite.move(0, -flappy.sprite.getPosition().y);
+					else
+						flappy.sprite.move(0, flappy.velocity);
+					if (gameLevel != 0)
+						flappy.jump.play();
+				}
 			}
 			break;
 		}
