@@ -26,7 +26,7 @@ int main()
 	backgroundImage.loadFromFile("assets/background.png");
 	Sprite background(backgroundImage);
 
-	// Create 3 txt files for each lvl if not created and write 0 in it, if created reset their values
+	// Create 3 txt files for each lvl if not created and write 0 in it, if created leave their values as it is
 	txtHighscore();
 
 	// Game Loop

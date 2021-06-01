@@ -6,33 +6,85 @@
 using namespace sf;
 using namespace std;
 
-// Create 3 txt files for each lvl if not created and write 0 in it, if created reset their values
+// Create 3 txt files for each lvl if not created and write 0 in it, if created leave their values as it is
 void txtHighscore(){
 
-	ofstream writeFileEasy(".easy.txt");
-	if (writeFileEasy.is_open())
+	bool lvlEasy = true, lvlMedium = true, lvlHard = true;
+	
+	ifstream readFileEasy;
+	readFileEasy.open(".easy.txt");
+	if (readFileEasy.is_open())
+	{
+		int userHighScore = 0;
+		while (!readFileEasy.eof())
+		{
+			readFileEasy >> userHighScore;
+		}
+		if (userHighScore > 0)
+			lvlEasy = false;
+	}
+	readFileEasy.close();
+
+	if (lvlEasy)
+	{
+		ofstream writeFileEasy(".easy.txt");
+		if (writeFileEasy.is_open())
 		{
 			int userHighScore = 0;
 			writeFileEasy << userHighScore;
 		}
 		writeFileEasy.close();
+	}
 
-	ofstream writeFileMedium(".medium.txt");
-	if (writeFileMedium.is_open())
+	ifstream readFileMedium;
+	readFileMedium.open(".medium.txt");
+	if (readFileMedium.is_open())
+	{
+		int userHighScore = 0;
+		while (!readFileMedium.eof())
+		{
+			readFileMedium >> userHighScore;
+		}
+		if (userHighScore > 0)
+			lvlMedium = false;
+	}
+	readFileMedium.close();
+
+	if (lvlMedium)
+	{
+		ofstream writeFileMedium(".medium.txt");
+		if (writeFileMedium.is_open())
 		{
 			int userHighScore = 0;
 			writeFileMedium << userHighScore;
 		}
 		writeFileMedium.close();
+	}
 
-	ofstream writeFileHard(".hard.txt");
-	if (writeFileHard.is_open())
+	ifstream readFileHard;
+	readFileHard.open(".hard.txt");
+	if (readFileHard.is_open())
+	{
+		int userHighScore = 0;
+		while (!readFileHard.eof())
+		{
+			readFileHard >> userHighScore;
+		}
+		if (userHighScore > 0)
+			lvlHard = false;
+	}
+	readFileHard.close();
+
+	if (lvlHard)
+	{
+		ofstream writeFileHard(".hard.txt");
+		if (writeFileHard.is_open())
 		{
 			int userHighScore = 0;
 			writeFileHard << userHighScore;
 		}
 		writeFileHard.close();
-
+	}
 }
 
 // Function to Read/Write highscore from file for each game lvl
