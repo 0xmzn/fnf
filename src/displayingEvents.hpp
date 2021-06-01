@@ -3,6 +3,8 @@
 #include "bird.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <fstream>
+#include <bits/stdc++.h>
 using namespace sf;
 using namespace std;
 
@@ -13,8 +15,30 @@ const float HEI = 384;
 int frames = 0;
 int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
 
+// Function to Read/Write highscore from file
+void Highscore(int score, int &userHighScore)
+{
+    ifstream readFile;
+    readFile.open("highscore.txt");
+    if(readFile.is_open()){
+        while(!readFile.eof()){
+            readFile >> userHighScore;
+        }
+    }
+    readFile.close();
+    ofstream writeFile("highscore.txt");
+    if(writeFile.is_open())
+	{
+        if(score > userHighScore)
+            userHighScore = score;
+
+        writeFile << userHighScore;
+    }
+    writeFile.close();
+}
+
 // Function to handle Events
-void handleEvent(RenderWindow& window, Event& event, bool& isPaused)
+void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGameover)
 {
 	while (window.pollEvent(event))
 	{
@@ -23,32 +47,39 @@ void handleEvent(RenderWindow& window, Event& event, bool& isPaused)
 			case Event::Closed:
 				window.close();
 				break;
+
 			case Event::KeyPressed:
-				if (Keyboard::isKeyPressed(Keyboard::E))
-					gameLevel = 1;
-				else if (Keyboard::isKeyPressed(Keyboard::M))
-					gameLevel = 500;
-				else if (Keyboard::isKeyPressed(Keyboard::H))
-					gameLevel = 999;
-				else if (Keyboard::isKeyPressed(Keyboard::Escape))
-				{
-					gameLevel = 0;
-					isPaused = false;
-				}
-				else if (Keyboard::isKeyPressed(Keyboard::Q))
+				if (Keyboard::isKeyPressed(Keyboard::Q))
 					window.close();
-				else if (Keyboard::isKeyPressed(Keyboard::P))
-					isPaused = !isPaused;
+				if(isGameover)
+				{	
+					gameLevel = 0;
+				}
+				else
+				{
+					if (Keyboard::isKeyPressed(Keyboard::E))
+						gameLevel = 1;
+					else if (Keyboard::isKeyPressed(Keyboard::M))
+						gameLevel = 500;
+					else if (Keyboard::isKeyPressed(Keyboard::H))
+						gameLevel = 999;
+					else if (Keyboard::isKeyPressed(Keyboard::Escape))
+					{
+						gameLevel = 0;
+						isPaused = false;
+					}
+					else if (Keyboard::isKeyPressed(Keyboard::P))
+						isPaused = !isPaused;
+				}
 				break;
 			case Event::KeyReleased:
 				if (event.key.code == Keyboard::Key::Up)
 				{
-
 					flappy.velocity = flappy.jumpAcc;
 					flappy.sprite.move(0, flappy.velocity);
 					flappy.jump.play();
-					break;
 				}
+				break;
 		}
 	}
 }
@@ -70,7 +101,6 @@ void displayTitle(RenderWindow& window)
 }
 
 // Function to display Background
-// We could add a string parameter to the function to chose which background to draw
 void displayBackground(RenderWindow& window)
 {
 	Texture backgroundImage;
@@ -106,9 +136,10 @@ void displayIntroBird(RenderWindow& window)
 	window.draw(flappyBird);
 }
 
-// Function to display Menu
-void displayMenu(RenderWindow& window)
+// Function to display Menu and reset score
+void displayMenu(RenderWindow& window, int &score)
 {
+	score = 0;
 	window.clear();
 	Font font;
 	font.loadFromFile("assets/font.ttf");
@@ -127,22 +158,96 @@ void displayMenu(RenderWindow& window)
 	window.display();
 }
 
+void displayBoard(RenderWindow& window)
+{
+	Texture boardImage;
+	boardImage.loadFromFile("assets/board.png");
+	Sprite board(boardImage);
+	board.setPosition(WID - 270, HEI - 100);
+	window.draw(board);
+}
+
+// Function to display while playing the Game
+void displayScore(RenderWindow& window, int score)
+{
+	Font font;
+	font.loadFromFile("assets/font.ttf");
+	Text userScore;
+	string strUserScore = to_string(score);
+	userScore.setFont(font);
+	userScore.setOutlineThickness(3);
+	userScore.setOutlineColor(Color::Black);
+	userScore.setString(strUserScore);
+	userScore.setCharacterSize(70);
+	userScore.setFillColor(Color::White);
+	userScore.setPosition( 15 , 0);
+	window.draw(userScore);
+}
+
 // Function to display Game over Screen
-void displayGameover(RenderWindow& window)
+void displayGameover(RenderWindow& window, int score, int usrHighScore)
 {
 	window.clear();
 	Font font;
 	font.loadFromFile("assets/font.ttf");
-	Text text;
+	Text text, userScore, HighScore;
 	text.setFont(font);
 	text.setOutlineThickness(3);
 	text.setOutlineColor(Color::Black);
 	text.setString("Game Over");
 	text.setCharacterSize(130);
 	text.setFillColor(Color::White);
-	text.setPosition(WID - 330, HEI - 300);
+	text.setPosition(WID - 325, HEI - 300);
+	
+	// Display userScore on Game Over screen
+	string strUserScore;
+	if(score > 99 )
+	{
+		strUserScore = to_string(score);
+	}
+	else if (score > 9)
+	{
+		strUserScore = "0" +to_string(score);
+	}
+	else if(score <= 9)
+	{
+		strUserScore = "00" + to_string(score);
+	}
+	userScore.setFont(font);
+	userScore.setOutlineThickness(3);
+	userScore.setOutlineColor(Color::Black);
+	userScore.setString(strUserScore);
+	userScore.setCharacterSize(100);
+	userScore.setFillColor(Color::White);
+	userScore.setPosition(WID - 200, HEI );
+	
+	// Display userHighScore on Game Over screen
+	string strUserHighScore;
+	if(usrHighScore > 99)
+	{
+		strUserHighScore =  to_string(usrHighScore);
+	}
+	else if (usrHighScore > 9)
+	{
+		strUserHighScore = "0" +to_string(usrHighScore);
+	}
+	else if(usrHighScore <= 9)
+	{
+		strUserHighScore = "00" + to_string(usrHighScore);
+	}
+	HighScore.setFont(font);
+	HighScore.setOutlineThickness(3);
+	HighScore.setOutlineColor(Color::Black);
+	HighScore.setString(strUserHighScore);
+	HighScore.setCharacterSize(100);
+	HighScore.setFillColor(Color::White);
+	HighScore.setPosition(WID + 70, HEI );
+
 	displayBackground(window);
+	displayBoard(window);
 	window.draw(text);
+	window.draw(userScore);
+	window.draw(HighScore);
 	window.display();
 }
 

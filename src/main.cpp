@@ -11,6 +11,8 @@ bool isGameover = false;
 bool isPaused = false;
 int main()
 {
+	int score = 0;
+	int userHighScore = 0;
 	// Create a window
 	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Close);
 	window.setFramerateLimit(360);
@@ -28,21 +30,24 @@ int main()
 	while (window.isOpen())
 	{
 		Event event;
-		handleEvent(window, event, isPaused);
+		handleEvent(window, event, isPaused, isGameover);
 
 		// Startscreen or if esc is pressed
-
 		if (gameLevel == 0)
 		{
+			// reset
+			frameRate = 150, gap = 225, flappy.isAlive = 1;
+			pipes.clear();
+			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
+			flappy.sprite.setPosition(flappy.x, flappy.y);
+		
+			// Save Highscore
+			Highscore(score, userHighScore);
+		
 			// Displays Game Over Screen if isGameover flag is true
 			if (isGameover)
 			{
-				displayGameover(window);
-				// reset
-				frameRate = 150, gap = 225, flappy.isAlive = 1;
-				pipes.clear();
-				flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
-				flappy.sprite.setPosition(flappy.x, flappy.y);
+				displayGameover(window, score, userHighScore);
 				if(event.key.code == Keyboard::Key::Escape)
 				{
 					isGameover = false;
@@ -51,13 +56,8 @@ int main()
 			// Displays Main Menu Screen if isGameover flag is false
 			else
 			{
-				// reset
-				frameRate = 150, gap = 225, flappy.isAlive = 1;
-				pipes.clear();
-				flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
-				flappy.sprite.setPosition(flappy.x, flappy.y);
-				displayMenu(window);
-			}
+				displayMenu(window, score);
+			}	
 		}
 		else
 		{	
@@ -132,7 +132,6 @@ int main()
 
 					px = i.getPosition().x;
 					pw = 150 * i.getScale().x; // pipe width
-
 					if (i.getScale().y > 0)
 					{
 						py = i.getPosition().y;
@@ -171,6 +170,7 @@ int main()
 
 				window.clear();
 				window.draw(background);
+				displayScore(window, score);
 				window.draw(flappy.sprite);
 
 				for (auto i : pipes)
@@ -180,12 +180,27 @@ int main()
 				window.display();
 				// increment frames
 				frames++;
+
+
+				// Calculate Score
+				for (auto i : pipes)
+				{
+					if (i.getPosition().x == 250)
+					{
+						score++;
+						cout << score << endl;
+						break;
+					}
+				}
+
+
 			}
 			// Pause Game if isPaused flag is true
 			else
 			{
 				window.clear();
 				window.draw(background);
+				displayScore(window, score);
 				window.draw(flappy.sprite);
 				for (auto i : pipes)
 				{
