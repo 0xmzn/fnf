@@ -1,41 +1,13 @@
 #ifndef displayingEvents_H
 #define displayingEvents_H
 #include "bird.hpp"
+#include "definitions.hpp"
 #include <SFML/Audio.hpp>
+#include "pause.hpp"
 #include <SFML/Graphics.hpp>
-#include <fstream>
 #include <bits/stdc++.h>
 using namespace sf;
 using namespace std;
-
-const unsigned int WIDTH = 1024;
-const unsigned int HEIGHT = 768;
-const float WID = 512;
-const float HEI = 384;
-int frames = 0;
-int gameLevel = 0; // 1 --> easy | 500 --> medium | 999 --> hard
-
-// Function to Read/Write highscore from file
-void Highscore(int score, int &userHighScore)
-{
-    ifstream readFile;
-    readFile.open("highscore.txt");
-    if(readFile.is_open()){
-        while(!readFile.eof()){
-            readFile >> userHighScore;
-        }
-    }
-    readFile.close();
-    ofstream writeFile("highscore.txt");
-    if(writeFile.is_open())
-	{
-        if(score > userHighScore)
-            userHighScore = score;
-
-        writeFile << userHighScore;
-    }
-    writeFile.close();
-}
 
 // Function to handle Events
 void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGameover)
@@ -51,8 +23,8 @@ void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGam
 			case Event::KeyPressed:
 				if (Keyboard::isKeyPressed(Keyboard::Q))
 					window.close();
-				if(isGameover)
-				{	
+				if (isGameover)
+				{
 					gameLevel = 0;
 				}
 				else
@@ -69,7 +41,10 @@ void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGam
 						isPaused = false;
 					}
 					else if (Keyboard::isKeyPressed(Keyboard::P))
+					{
 						isPaused = !isPaused;
+						playPauseSound();
+					}
 				}
 				break;
 			case Event::KeyReleased:
@@ -77,7 +52,8 @@ void handleEvent(RenderWindow& window, Event& event, bool& isPaused, bool& isGam
 				{
 					flappy.velocity = flappy.jumpAcc;
 					flappy.sprite.move(0, flappy.velocity);
-					flappy.jump.play();
+					if (gameLevel != 0)
+						flappy.jump.play();
 				}
 				break;
 		}
@@ -109,22 +85,6 @@ void displayBackground(RenderWindow& window)
 	window.draw(background);
 }
 
-// Function to display Pause Screen
-void displayPause(RenderWindow& window)
-{
-	Font font;
-	font.loadFromFile("assets/font.ttf");
-	Text pause;
-	pause.setFont(font);
-	pause.setOutlineThickness(5);
-	pause.setOutlineColor(Color::Black);
-	pause.setString("Game Paused");
-	pause.setCharacterSize(130);
-	pause.setFillColor(Color::White);
-	pause.setPosition(WID - 410, HEI - 300);
-	window.draw(pause);
-}
-
 // Function to display the bird in the main menu
 void displayIntroBird(RenderWindow& window)
 {
@@ -137,7 +97,7 @@ void displayIntroBird(RenderWindow& window)
 }
 
 // Function to display Menu and reset score
-void displayMenu(RenderWindow& window, int &score)
+void displayMenu(RenderWindow& window, int& score)
 {
 	score = 0;
 	window.clear();
@@ -167,23 +127,6 @@ void displayBoard(RenderWindow& window)
 	window.draw(board);
 }
 
-// Function to display while playing the Game
-void displayScore(RenderWindow& window, int score)
-{
-	Font font;
-	font.loadFromFile("assets/font.ttf");
-	Text userScore;
-	string strUserScore = to_string(score);
-	userScore.setFont(font);
-	userScore.setOutlineThickness(3);
-	userScore.setOutlineColor(Color::Black);
-	userScore.setString(strUserScore);
-	userScore.setCharacterSize(70);
-	userScore.setFillColor(Color::White);
-	userScore.setPosition( 15 , 0);
-	window.draw(userScore);
-}
-
 // Function to display Game over Screen
 void displayGameover(RenderWindow& window, int score, int usrHighScore)
 {
@@ -198,18 +141,18 @@ void displayGameover(RenderWindow& window, int score, int usrHighScore)
 	text.setCharacterSize(130);
 	text.setFillColor(Color::White);
 	text.setPosition(WID - 325, HEI - 300);
-	
+
 	// Display userScore on Game Over screen
 	string strUserScore;
-	if(score > 99 )
+	if (score > 99)
 	{
 		strUserScore = to_string(score);
 	}
 	else if (score > 9)
 	{
-		strUserScore = "0" +to_string(score);
+		strUserScore = "0" + to_string(score);
 	}
-	else if(score <= 9)
+	else if (score <= 9)
 	{
 		strUserScore = "00" + to_string(score);
 	}
@@ -219,19 +162,19 @@ void displayGameover(RenderWindow& window, int score, int usrHighScore)
 	userScore.setString(strUserScore);
 	userScore.setCharacterSize(100);
 	userScore.setFillColor(Color::White);
-	userScore.setPosition(WID - 200, HEI );
-	
+	userScore.setPosition(WID - 200, HEI);
+
 	// Display userHighScore on Game Over screen
 	string strUserHighScore;
-	if(usrHighScore > 99)
+	if (usrHighScore > 99)
 	{
-		strUserHighScore =  to_string(usrHighScore);
+		strUserHighScore = to_string(usrHighScore);
 	}
 	else if (usrHighScore > 9)
 	{
-		strUserHighScore = "0" +to_string(usrHighScore);
+		strUserHighScore = "0" + to_string(usrHighScore);
 	}
-	else if(usrHighScore <= 9)
+	else if (usrHighScore <= 9)
 	{
 		strUserHighScore = "00" + to_string(usrHighScore);
 	}
@@ -241,7 +184,7 @@ void displayGameover(RenderWindow& window, int score, int usrHighScore)
 	HighScore.setString(strUserHighScore);
 	HighScore.setCharacterSize(100);
 	HighScore.setFillColor(Color::White);
-	HighScore.setPosition(WID + 70, HEI );
+	HighScore.setPosition(WID + 70, HEI);
 
 	displayBackground(window);
 	displayBoard(window);

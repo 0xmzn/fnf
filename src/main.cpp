@@ -1,5 +1,8 @@
 #include "bird.hpp"
+#include "definitions.hpp"
 #include "displayingEvents.hpp"
+#include "highscore.hpp"
+#include "pause.hpp"
 #include "pipe.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -7,24 +10,21 @@
 using namespace sf;
 using namespace std;
 
-bool isGameover = false;
-bool isPaused = false;
 int main()
 {
-	int score = 0;
-	int userHighScore = 0;
+
 	// Create a window
 	RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Close);
 	window.setFramerateLimit(360);
+
+	map<int, bool> markedPipes;
+
+	// load flappy, pipes and background
+	loadFlappy();
+	loadPipe();
 	Texture backgroundImage;
 	backgroundImage.loadFromFile("assets/background.png");
 	Sprite background(backgroundImage);
-
-	// Load flappy and pipe
-	loadFlappy();
-	loadPipe();
-
-	int frameRate = 150, gap = 225; // default
 
 	// Game Loop
 	while (window.isOpen())
@@ -36,19 +36,19 @@ int main()
 		if (gameLevel == 0)
 		{
 			// reset
-			frameRate = 150, gap = 225, flappy.isAlive = 1;
+			pipeRate = 150, gap = 225, flappy.isAlive = 1;
 			pipes.clear();
 			flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
 			flappy.sprite.setPosition(flappy.x, flappy.y);
-		
+
 			// Save Highscore
 			Highscore(score, userHighScore);
-		
+
 			// Displays Game Over Screen if isGameover flag is true
 			if (isGameover)
 			{
 				displayGameover(window, score, userHighScore);
-				if(event.key.code == Keyboard::Key::Escape)
+				if (event.key.code == Keyboard::Key::Escape)
 				{
 					isGameover = false;
 				}
@@ -57,10 +57,10 @@ int main()
 			else
 			{
 				displayMenu(window, score);
-			}	
+			}
 		}
 		else
-		{	
+		{
 			// Start Game if isPaused flag is false
 			if (!isPaused)
 			{
@@ -70,24 +70,24 @@ int main()
 				// easy
 				if (gameLevel == 1)
 				{
-					frameRate = 200;
+					pipeRate = 200;
 					gap = 250;
 				}
 				// medium
 				if (gameLevel == 500)
 				{
-					frameRate = 150;
+					pipeRate = 150;
 					gap = 225;
 				}
 				// hard
 				if (gameLevel == 999)
 				{
-					frameRate = 120;
+					pipeRate = 120;
 					gap = 200;
 				}
 
 				// generate pipes
-				if (frames % frameRate == 0)
+				if (frames % pipeRate == 0)
 				{
 					// dark magic
 					int random = rand() % 150 + 200;
@@ -98,6 +98,9 @@ int main()
 					// push pipes to the vector
 					pipes.push_back(pipeDown.sprite);
 					pipes.push_back(pipeUp.sprite);
+
+					// clear map for scoring
+					markedPipes.clear();
 				}
 
 				// simulate moving
@@ -143,14 +146,15 @@ int main()
 						py = i.getPosition().y - ph;
 					}
 
-					if (isColliding(fx, fy, fw, fh, px, py, pw, ph))
+					// check colliding, ceiling and groung
+					if (isColliding(fx, fy, fw, fh, px, py, pw, ph) || hitGround(fy) || hitCeiling(fy))
 					{
 						flappy.isAlive = false;
 					}
 				}
 
 				// stop game and return to main menu
-				if (flappy.sprite.getPosition().y >= 700 || !flappy.isAlive)
+				if (!flappy.isAlive)
 				{
 					gameLevel = 0;
 					flappy.isAlive = 0;
@@ -181,19 +185,17 @@ int main()
 				// increment frames
 				frames++;
 
-
 				// Calculate Score
-				for (auto i : pipes)
+				for (int i = 0; i < pipes.size(); i++)
 				{
-					if (i.getPosition().x == 250)
+
+					if (flappy.sprite.getPosition().x > pipes[i].getPosition().x && !markedPipes[i] && !markedPipes[i + 1])
 					{
 						score++;
-						cout << score << endl;
+						markedPipes[i] = 1, markedPipes[i + 1] = 1;
 						break;
 					}
 				}
-
-
 			}
 			// Pause Game if isPaused flag is true
 			else
