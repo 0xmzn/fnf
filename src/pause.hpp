@@ -22,6 +22,7 @@ void displayPause(RenderWindow& window)
 	window.draw(pause);
 }
 
+// Play sounds
 void playPauseSound()
 {
 	SoundBuffer resumeBuffer, pauseBuffer;
@@ -43,4 +44,4 @@ void playPauseSound()
 	}
 }
 
-#endif // pipe_H
+#endif // pause_H

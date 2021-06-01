@@ -33,7 +33,7 @@ bool hitGround(float y)
 
 bool hitCeiling(float y)
 {
-	if (y <= -692.0)
+	if (y <= -50)
 		return true;
 	return false;
 }
