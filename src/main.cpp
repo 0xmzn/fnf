@@ -44,8 +44,7 @@ int main()
         {
             // reset to default
             pipeRate = 150, gap = 225, flappy.isAlive = 1, frames = 0;
-            ;
-            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false;
+            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false;
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
             pipes.clear();
@@ -198,7 +197,18 @@ int main()
                 window.display();
 
                 // Calculate Score
-                Highscore(score, userHighScore, gameLevel, isHighscore);
+
+                if (!checkedHighscore)
+                {
+                    Highscore(score, userHighScore, gameLevel, isHighscore);
+                    checkedHighscore = true;
+                }
+
+                if (score > userHighScore)
+                {
+                    userHighScore = score;
+                    isHighscore = true;
+                }
                 for (int i = 0; i < pipes.size(); i++)
                 {
                     // check if bird position exceeds pipe position + its scaled width

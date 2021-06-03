@@ -17,5 +17,6 @@ bool isMuted = false;
 bool isHighscore = false;
 bool highscoreSoundPlayed = false;
 bool pauseSoundPlayed = false;
+bool checkedHighscore = false;
 
 #endif // definitions_H
