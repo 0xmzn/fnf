@@ -15,5 +15,7 @@ bool isGameover = false;
 bool isPaused = false;
 bool isMuted = false;
 bool isHighscore = false;
+bool highscoreSoundPlayed = false;
+bool pauseSoundPlayed = false;
 
 #endif // definitions_H

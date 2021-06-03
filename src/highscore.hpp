@@ -7,186 +7,193 @@ using namespace sf;
 using namespace std;
 
 // Create 3 txt files for each lvl if not created and write 0 in it, if created leave their values as it is
-void txtHighscore(){
+void txtHighscore()
+{
 
-	bool lvlEasy = true, lvlMedium = true, lvlHard = true;
-	
-	ifstream readFileEasy;
-	readFileEasy.open(".easy.txt");
-	if (readFileEasy.is_open())
-	{
-		int userHighScore = 0;
-		while (!readFileEasy.eof())
-		{
-			readFileEasy >> userHighScore;
-		}
-		if (userHighScore > 0)
-			lvlEasy = false;
-	}
-	readFileEasy.close();
+    bool lvlEasy = true, lvlMedium = true, lvlHard = true;
 
-	if (lvlEasy)
-	{
-		ofstream writeFileEasy(".easy.txt");
-		if (writeFileEasy.is_open())
-		{
-			int userHighScore = 0;
-			writeFileEasy << userHighScore;
-		}
-		writeFileEasy.close();
-	}
+    ifstream readFileEasy;
+    readFileEasy.open(".easy.txt");
+    if (readFileEasy.is_open())
+    {
+        int userHighScore = 0;
+        while (!readFileEasy.eof())
+        {
+            readFileEasy >> userHighScore;
+        }
+        if (userHighScore > 0)
+            lvlEasy = false;
+    }
+    readFileEasy.close();
 
-	ifstream readFileMedium;
-	readFileMedium.open(".medium.txt");
-	if (readFileMedium.is_open())
-	{
-		int userHighScore = 0;
-		while (!readFileMedium.eof())
-		{
-			readFileMedium >> userHighScore;
-		}
-		if (userHighScore > 0)
-			lvlMedium = false;
-	}
-	readFileMedium.close();
+    if (lvlEasy)
+    {
+        ofstream writeFileEasy(".easy.txt");
+        if (writeFileEasy.is_open())
+        {
+            int userHighScore = 0;
+            writeFileEasy << userHighScore;
+        }
+        writeFileEasy.close();
+    }
 
-	if (lvlMedium)
-	{
-		ofstream writeFileMedium(".medium.txt");
-		if (writeFileMedium.is_open())
-		{
-			int userHighScore = 0;
-			writeFileMedium << userHighScore;
-		}
-		writeFileMedium.close();
-	}
+    ifstream readFileMedium;
+    readFileMedium.open(".medium.txt");
+    if (readFileMedium.is_open())
+    {
+        int userHighScore = 0;
+        while (!readFileMedium.eof())
+        {
+            readFileMedium >> userHighScore;
+        }
+        if (userHighScore > 0)
+            lvlMedium = false;
+    }
+    readFileMedium.close();
 
-	ifstream readFileHard;
-	readFileHard.open(".hard.txt");
-	if (readFileHard.is_open())
-	{
-		int userHighScore = 0;
-		while (!readFileHard.eof())
-		{
-			readFileHard >> userHighScore;
-		}
-		if (userHighScore > 0)
-			lvlHard = false;
-	}
-	readFileHard.close();
+    if (lvlMedium)
+    {
+        ofstream writeFileMedium(".medium.txt");
+        if (writeFileMedium.is_open())
+        {
+            int userHighScore = 0;
+            writeFileMedium << userHighScore;
+        }
+        writeFileMedium.close();
+    }
 
-	if (lvlHard)
-	{
-		ofstream writeFileHard(".hard.txt");
-		if (writeFileHard.is_open())
-		{
-			int userHighScore = 0;
-			writeFileHard << userHighScore;
-		}
-		writeFileHard.close();
-	}
+    ifstream readFileHard;
+    readFileHard.open(".hard.txt");
+    if (readFileHard.is_open())
+    {
+        int userHighScore = 0;
+        while (!readFileHard.eof())
+        {
+            readFileHard >> userHighScore;
+        }
+        if (userHighScore > 0)
+            lvlHard = false;
+    }
+    readFileHard.close();
+
+    if (lvlHard)
+    {
+        ofstream writeFileHard(".hard.txt");
+        if (writeFileHard.is_open())
+        {
+            int userHighScore = 0;
+            writeFileHard << userHighScore;
+        }
+        writeFileHard.close();
+    }
 }
 
 // Function to Read/Write highscore from file for each game lvl
-void Highscore(int score, int& userHighScore, int gameLevel, bool &isHighscore)
+void Highscore(int score, int &userHighScore, int gameLevel, bool &isHighscore)
 {
-	if(gameLevel == 1){
+    if (gameLevel == 1)
+    {
 
-		ifstream readFile;
-		readFile.open(".easy.txt");
+        ifstream readFile;
+        readFile.open(".easy.txt");
 
-		if (readFile.is_open())
-		{
-			while (!readFile.eof())
-			{
-				readFile >> userHighScore;
-			}
-		}
-		readFile.close();
+        if (readFile.is_open())
+        {
+            while (!readFile.eof())
+            {
+                readFile >> userHighScore;
+            }
+        }
+        readFile.close();
 
-		ofstream writeFile(".easy.txt");
-		if (writeFile.is_open())
-		{
-			if (score > userHighScore){
-				userHighScore = score;
-				isHighscore = true;
-			}
+        ofstream writeFile(".easy.txt");
+        if (writeFile.is_open())
+        {
+            if (score > userHighScore)
+            {
+                userHighScore = score;
+                isHighscore = true;
+            }
 
-			writeFile << userHighScore;
-		}
-		writeFile.close();
-	}
+            writeFile << userHighScore;
+        }
+        writeFile.close();
+    }
 
-	if(gameLevel == 500){
+    if (gameLevel == 500)
+    {
 
-		ifstream readFile;
-		readFile.open(".medium.txt");
+        ifstream readFile;
+        readFile.open(".medium.txt");
 
-		if (readFile.is_open())
-		{
-			while (!readFile.eof())
-			{
-				readFile >> userHighScore;
-			}
-		}
-		readFile.close();
+        if (readFile.is_open())
+        {
+            while (!readFile.eof())
+            {
+                readFile >> userHighScore;
+            }
+        }
+        readFile.close();
 
-		ofstream writeFile(".medium.txt");
-		if (writeFile.is_open())
-		{
-			if (score > userHighScore){
-				userHighScore = score;
-				isHighscore = true;
-			}
+        ofstream writeFile(".medium.txt");
+        if (writeFile.is_open())
+        {
+            if (score > userHighScore)
+            {
+                userHighScore = score;
+                isHighscore = true;
+            }
 
-			writeFile << userHighScore;
-		}
-		writeFile.close();
-	}
+            writeFile << userHighScore;
+        }
+        writeFile.close();
+    }
 
-	if(gameLevel == 999){
+    if (gameLevel == 999)
+    {
 
-		ifstream readFile;
-		readFile.open(".hard.txt");
+        ifstream readFile;
+        readFile.open(".hard.txt");
 
-		if (readFile.is_open())
-		{
-			while (!readFile.eof())
-			{
-				readFile >> userHighScore;
-			}
-		}
-		readFile.close();
+        if (readFile.is_open())
+        {
+            while (!readFile.eof())
+            {
+                readFile >> userHighScore;
+            }
+        }
+        readFile.close();
 
-		ofstream writeFile(".hard.txt");
-		if (writeFile.is_open())
-		{
-			if (score > userHighScore){
-				userHighScore = score;
-				isHighscore = true;
-			}
+        ofstream writeFile(".hard.txt");
+        if (writeFile.is_open())
+        {
+            if (score > userHighScore)
+            {
+                userHighScore = score;
+                isHighscore = true;
+            }
 
-			writeFile << userHighScore;
-		}
-		writeFile.close();
-	}
+            writeFile << userHighScore;
+        }
+        writeFile.close();
+    }
 }
 
 // Function to display while playing the Game
-void displayScore(RenderWindow& window, int score)
+void displayScore(RenderWindow &window, int score)
 {
-	Font font;
-	font.loadFromFile("assets/font.ttf");
-	Text userScore;
-	string strUserScore = to_string(score);
-	userScore.setFont(font);
-	userScore.setOutlineThickness(3);
-	userScore.setOutlineColor(Color::Black);
-	userScore.setString(strUserScore);
-	userScore.setCharacterSize(70);
-	userScore.setFillColor(Color::White);
-	userScore.setPosition(15, 0);
-	window.draw(userScore);
+    Font font;
+    font.loadFromFile("assets/font.ttf");
+    Text userScore;
+    string strUserScore = to_string(score);
+    userScore.setFont(font);
+    userScore.setOutlineThickness(3);
+    userScore.setOutlineColor(Color::Black);
+    userScore.setString(strUserScore);
+    userScore.setCharacterSize(70);
+    userScore.setFillColor(Color::White);
+    userScore.setPosition(15, 0);
+    window.draw(userScore);
 }
 
 #endif // highscore_H

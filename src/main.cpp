@@ -16,18 +16,22 @@ int main()
     // Create a window
     RenderWindow window(VideoMode(WIDTH, HEIGHT), "fnf", Style::Close);
     window.setFramerateLimit(360);
-
-    map<int, bool> markedPipes;
-
-    // load flappy, pipes and background
-    loadFlappy();
-    loadPipe();
     Texture backgroundImage;
     backgroundImage.loadFromFile("assets/background.png");
     Sprite background(backgroundImage);
 
-    // Create 3 txt files for each lvl if not created and write 0 in it, if created leave their values as it is
+    // load things
+    map<int, bool> markedPipes;
+    loadFlappy();
+    loadPipe();
     txtHighscore();
+    // sounds
+    SoundBuffer highscoreBuffer, pauseBuffer;
+    Sound highscoreSound, pauseSound;
+    highscoreBuffer.loadFromFile("audio/highscore.wav");
+    highscoreSound.setBuffer(highscoreBuffer);
+    pauseBuffer.loadFromFile("audio/pause.wav");
+    pauseSound.setBuffer(pauseBuffer);
 
     // Game Loop
     while (window.isOpen())
@@ -38,11 +42,13 @@ int main()
         // Startscreen or if esc is pressed
         if (gameLevel == 0)
         {
-            // reset
-            pipeRate = 150, gap = 225, flappy.isAlive = 1;
-            pipes.clear();
+            // reset to default
+            pipeRate = 150, gap = 225, flappy.isAlive = 1, frames = 0;
+            ;
+            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false;
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
+            pipes.clear();
 
             // Displays Game Over Screen if isGameover flag is true
             if (isGameover)
@@ -51,7 +57,7 @@ int main()
                 if (event.key.code == Keyboard::Key::Escape)
                 {
                     //stop sounds while playing if the user pressed the escape button
-                    flappy.jump.stop();
+                    flappy.passPipe.stop();
                     flappy.collide.stop();
                     isGameover = false;
                     isHighscore = false;
@@ -70,6 +76,8 @@ int main()
             {
                 // stop sound
                 flappy.collide.stop();
+                pauseSound.stop();
+                pauseSoundPlayed = false;
 
                 // easy
                 if (gameLevel == 1)
@@ -188,10 +196,9 @@ int main()
                     window.draw(i);
                 }
                 window.display();
-                // increment frames
-                frames++;
 
                 // Calculate Score
+                Highscore(score, userHighScore, gameLevel, isHighscore);
                 for (int i = 0; i < pipes.size(); i++)
                 {
                     // check if bird position exceeds pipe position + its scaled width
@@ -199,13 +206,29 @@ int main()
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
+                        flappy.passPipe.play();
+                        if (isHighscore && !highscoreSoundPlayed)
+                        {
+                            highscoreSound.play();
+                            highscoreSoundPlayed = true;
+                        }
                         break;
                     }
                 }
+
+                // increment frames
+                frames++;
             }
             // Pause Game if isPaused flag is true
             else
             {
+                if (!pauseSoundPlayed)
+                {
+
+                    flappy.passPipe.stop(); // dont mix sounds
+                    pauseSound.play();
+                    pauseSoundPlayed = 1;
+                }
                 window.clear();
                 window.draw(background);
                 displayScore(window, score);
