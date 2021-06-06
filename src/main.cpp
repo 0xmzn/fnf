@@ -25,13 +25,6 @@ int main()
     loadFlappy();
     loadPipe();
     txtHighscore();
-    // sounds
-    SoundBuffer highscoreBuffer, pauseBuffer;
-    Sound highscoreSound, pauseSound;
-    highscoreBuffer.loadFromFile("audio/highscore.wav");
-    highscoreSound.setBuffer(highscoreBuffer);
-    pauseBuffer.loadFromFile("audio/pause.wav");
-    pauseSound.setBuffer(pauseBuffer);
 
     // Game Loop
     while (window.isOpen())
@@ -75,7 +68,7 @@ int main()
             {
                 // stop sound
                 flappy.collide.stop();
-                pauseSound.stop();
+                flappy.pauseSound.stop();
                 pauseSoundPlayed = false;
 
                 // easy
@@ -219,7 +212,7 @@ int main()
                         flappy.passPipe.play();
                         if (isHighscore && !highscoreSoundPlayed)
                         {
-                            highscoreSound.play();
+                            flappy.highscoreSound.play();
                             highscoreSoundPlayed = true;
                         }
                         break;
@@ -236,7 +229,7 @@ int main()
                 {
 
                     flappy.passPipe.stop(); // dont mix sounds
-                    pauseSound.play();
+                    flappy.pauseSound.play();
                     pauseSoundPlayed = 1;
                 }
                 window.clear();

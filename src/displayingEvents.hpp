@@ -29,11 +29,15 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 {
                     flappy.collide.setVolume(0);
                     flappy.passPipe.setVolume(0);
+                    flappy.highscoreSound.setVolume(0);
+                    flappy.pauseSound.setVolume(0);
                 }
                 else
                 {
                     flappy.collide.setVolume(100);
                     flappy.passPipe.setVolume(100);
+                    flappy.highscoreSound.setVolume(100);
+                    flappy.pauseSound.setVolume(100);
                 }
             }
             if (Keyboard::isKeyPressed(Keyboard::Q))
