@@ -35,7 +35,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 else
                 {
                     flappy.collide.setVolume(100);
-                    flappy.flap.setVolume(100);
+                    flappy.flap.setVolume(10);
                     flappy.highscoreSound.setVolume(100);
                     flappy.pauseSound.setVolume(100);
                 }
@@ -44,19 +44,19 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 window.close();
             if (isGameover)
             {
-                gameLevel = 0;
+                gameLevel = gameStates[3]; // Over
             }
             else
             {
                 if (Keyboard::isKeyPressed(Keyboard::E))
-                    gameLevel = 1;
+                    gameLevel = gameStates[0]; // Easy
                 else if (Keyboard::isKeyPressed(Keyboard::M))
-                    gameLevel = 500;
+                    gameLevel = gameStates[1]; // Medium
                 else if (Keyboard::isKeyPressed(Keyboard::H))
-                    gameLevel = 999;
+                    gameLevel = gameStates[2]; // Hard
                 else if (Keyboard::isKeyPressed(Keyboard::Escape))
                 {
-                    gameLevel = 0;
+                    gameLevel = gameStates[3]; // Over
                     isPaused = false;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::P))

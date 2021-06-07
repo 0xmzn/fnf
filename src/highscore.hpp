@@ -89,9 +89,9 @@ void txtHighscore()
 }
 
 // Function to Read/Write highscore from file for each game lvl
-void Highscore(int score, int &userHighScore, int gameLevel, bool &isHighscore)
+void Highscore(int score, int &userHighScore, string gameLevel, bool &isHighscore)
 {
-    if (gameLevel == 1)
+    if (gameLevel == "Easy")
     {
 
         ifstream readFile;
@@ -120,7 +120,7 @@ void Highscore(int score, int &userHighScore, int gameLevel, bool &isHighscore)
         writeFile.close();
     }
 
-    if (gameLevel == 500)
+    if (gameLevel == "Medium")
     {
 
         ifstream readFile;
@@ -149,7 +149,7 @@ void Highscore(int score, int &userHighScore, int gameLevel, bool &isHighscore)
         writeFile.close();
     }
 
-    if (gameLevel == 999)
+    if (gameLevel == "Hard")
     {
 
         ifstream readFile;

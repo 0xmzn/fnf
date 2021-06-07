@@ -33,11 +33,11 @@ int main()
         handleEvent(window, event, isPaused, isGameover);
 
         // Startscreen or if esc is pressed
-        if (gameLevel == 0)
+        if (gameLevel == gameStates[3])
         {
             // reset to default
             pipeRate = 150, gap = 225, flappy.isAlive = 1, frames = 0;
-            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false;
+            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false, firstTime = false;
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
             pipes.clear();
@@ -71,19 +71,19 @@ int main()
                 pauseSoundPlayed = false;
 
                 // easy
-                if (gameLevel == 1)
+                if (gameLevel == gameStates[0])
                 {
                     pipeRate = 200;
                     gap = 250;
                 }
                 // medium
-                if (gameLevel == 500)
+                if (gameLevel == gameStates[1])
                 {
                     pipeRate = 150;
                     gap = 225;
                 }
                 // hard
-                if (gameLevel == 999)
+                if (gameLevel == gameStates[2])
                 {
                     pipeRate = 120;
                     gap = 200;
@@ -161,7 +161,7 @@ int main()
                 // stop game and return to main menu
                 if (!flappy.isAlive)
                 {
-                    gameLevel = 0;
+                    gameLevel = gameStates[3]; // Over
                     flappy.isAlive = 0;
                     flappy.collide.play();
                     isGameover = true;
@@ -194,6 +194,8 @@ int main()
                 {
                     Highscore(score, userHighScore, gameLevel, isHighscore);
                     checkedHighscore = true;
+                    if (userHighScore == 0)
+                        firstTime = true;
                 }
 
                 if (score > userHighScore)
@@ -208,7 +210,7 @@ int main()
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
-                        if (isHighscore && !highscoreSoundPlayed)
+                        if (isHighscore && !highscoreSoundPlayed && !firstTime)
                         {
                             flappy.highscoreSound.play();
                             highscoreSoundPlayed = true;
