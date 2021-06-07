@@ -49,7 +49,6 @@ int main()
                 if (event.key.code == Keyboard::Key::Escape)
                 {
                     //stop sounds while playing if the user pressed the escape button
-                    flappy.passPipe.stop();
                     flappy.collide.stop();
                     isGameover = false;
                     isHighscore = false;
@@ -209,7 +208,6 @@ int main()
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
-                        flappy.passPipe.play();
                         if (isHighscore && !highscoreSoundPlayed)
                         {
                             flappy.highscoreSound.play();
@@ -227,8 +225,6 @@ int main()
             {
                 if (!pauseSoundPlayed)
                 {
-
-                    flappy.passPipe.stop(); // dont mix sounds
                     flappy.pauseSound.play();
                     pauseSoundPlayed = 1;
                 }

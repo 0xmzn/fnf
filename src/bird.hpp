@@ -11,10 +11,10 @@ struct Flappy
     const float gravAcc = 0.010;
     const float jumpAcc = -1;
     Sprite sprite;
-    SoundBuffer passPipeBuffer, collideBuffer;
+    SoundBuffer flapBuffer, collideBuffer;
     SoundBuffer highscoreBuffer, pauseBuffer;
     Sound highscoreSound, pauseSound;
-    Sound passPipe, collide;
+    Sound flap, collide;
     Texture texture[3];
 };
 
@@ -42,9 +42,9 @@ void loadFlappy()
     flappy.sprite.setScale(0.3f, 0.3f);
     flappy.sprite.setTexture(flappy.texture[1]);
     flappy.sprite.setPosition(flappy.x, flappy.y);
-    flappy.passPipeBuffer.loadFromFile("audio/passPipe.wav");
-    flappy.passPipe.setBuffer(flappy.passPipeBuffer);
-    flappy.passPipe.setVolume(10);
+    flappy.flapBuffer.loadFromFile("audio/flap.wav");
+    flappy.flap.setBuffer(flappy.flapBuffer);
+    flappy.flap.setVolume(10);
     flappy.collideBuffer.loadFromFile("audio/gameover.wav");
     flappy.collide.setBuffer(flappy.collideBuffer);
     flappy.highscoreBuffer.loadFromFile("audio/highscore.wav");

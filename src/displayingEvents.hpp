@@ -28,14 +28,14 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 if (isMuted)
                 {
                     flappy.collide.setVolume(0);
-                    flappy.passPipe.setVolume(0);
+                    flappy.flap.setVolume(0);
                     flappy.highscoreSound.setVolume(0);
                     flappy.pauseSound.setVolume(0);
                 }
                 else
                 {
                     flappy.collide.setVolume(100);
-                    flappy.passPipe.setVolume(100);
+                    flappy.flap.setVolume(100);
                     flappy.highscoreSound.setVolume(100);
                     flappy.pauseSound.setVolume(100);
                 }
@@ -68,8 +68,8 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
         case Event::KeyReleased:
             if (event.key.code == Keyboard::Key::Up)
             {
-                // if isPaused flag is true ignore the Up command
-                if (!isPaused)
+                // if isPaused and IsGameover flags are true ignore the Up command
+                if (!isPaused && !isGameover)
                 {
                     flappy.velocity = flappy.jumpAcc;
                     // Prevent going out of frame
@@ -77,6 +77,8 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                         flappy.sprite.move(0, -flappy.sprite.getPosition().y);
                     else
                         flappy.sprite.move(0, flappy.velocity);
+
+                    flappy.flap.play();
                 }
             }
             break;
