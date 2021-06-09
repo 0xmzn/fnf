@@ -18,7 +18,7 @@ bool highscoreSoundPlayed = false;
 bool pauseSoundPlayed = false;
 bool checkedHighscore = false;
 bool firstTime = false;
-std::string gameStates[] = {"Easy", "Medium", "Hard", "Over"}; 
+std::string gameStates[] = {"Easy", "Medium", "Hard", "Over"};
 std::string gameLevel = gameStates[3]; // startscreen
 
 #endif // definitions_H

@@ -50,6 +50,7 @@ int main()
                 {
                     //stop sounds while playing if the user pressed the escape button
                     flappy.collide.stop();
+                    flappy.highscoreSound.stop();
                     isGameover = false;
                     isHighscore = false;
                 }
@@ -163,6 +164,7 @@ int main()
                 {
                     gameLevel = gameStates[3]; // Over
                     flappy.isAlive = 0;
+                    flappy.highscoreSound.stop(); // dont mix sounds
                     flappy.collide.play();
                     isGameover = true;
                     continue;
@@ -203,6 +205,12 @@ int main()
                     userHighScore = score;
                     isHighscore = true;
                 }
+                if (isHighscore && !highscoreSoundPlayed && !firstTime)
+                {
+                    flappy.highscoreSound.play();
+                    highscoreSoundPlayed = true;
+                }
+
                 for (int i = 0; i < pipes.size(); i++)
                 {
                     // check if bird position exceeds pipe position + its scaled width
@@ -210,11 +218,6 @@ int main()
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
-                        if (isHighscore && !highscoreSoundPlayed && !firstTime)
-                        {
-                            flappy.highscoreSound.play();
-                            highscoreSoundPlayed = true;
-                        }
                         break;
                     }
                 }
