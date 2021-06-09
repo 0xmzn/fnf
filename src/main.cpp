@@ -37,7 +37,7 @@ int main()
         {
             // reset to default
             pipeRate = 150, gap = 225, flappy.isAlive = 1, frames = 0;
-            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false, firstTime = false;
+            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false, firstTime = false, isHighscore = false;
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
             pipes.clear();
@@ -50,9 +50,7 @@ int main()
                 {
                     //stop sounds while playing if the user pressed the escape button
                     flappy.collide.stop();
-                    flappy.highscoreSound.stop();
                     isGameover = false;
-                    isHighscore = false;
                 }
             }
             // Displays Main Menu Screen if isGameover flag is false
@@ -113,6 +111,14 @@ int main()
                     (*itr).move(-3, 0);
                 }
 
+                // animate bird
+                if (frames % 30 == 0) {
+                flappy.texCounter += 1;
+                flappy.texCounter = flappy.texCounter == 4 ? 0 : flappy.texCounter;
+                }
+
+                flappy.sprite.setTexture(flappy.texture[flappy.texCounter]);
+
                 // remove pipes offscreen
                 if (frames % 100 == 0)
                 {
@@ -135,7 +141,7 @@ int main()
                 {
                     float px, py, pw, ph;
                     float fx = flappy.sprite.getPosition().x, fy = flappy.sprite.getPosition().y;
-                    float fw = 259.0 * flappy.sprite.getScale().x, fh = 253.0 * flappy.sprite.getScale().y; // bird width and high scaled
+                    float fw = 34.0 * flappy.sprite.getScale().x, fh = 24.0 * flappy.sprite.getScale().y; // bird width and high scaled
 
                     px = i.getPosition().x;
                     pw = 150 * i.getScale().x; // pipe width

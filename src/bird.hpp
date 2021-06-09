@@ -15,7 +15,8 @@ struct Flappy
     SoundBuffer highscoreBuffer, pauseBuffer;
     Sound highscoreSound, pauseSound;
     Sound flap, collide;
-    Texture texture[3];
+    Texture texture[4];
+    int texCounter = 0;
 };
 
 Flappy flappy;
@@ -36,10 +37,11 @@ bool hitGround(float y)
 
 void loadFlappy()
 {
-    flappy.texture[0].loadFromFile("assets/gnu.png"); // add animation
-    flappy.texture[1].loadFromFile("assets/gnu.png");
-    flappy.texture[2].loadFromFile("assets/gnu.png");
-    flappy.sprite.setScale(0.3f, 0.3f);
+    flappy.texture[0].loadFromFile("assets/bird-mid.png"); // add animation
+    flappy.texture[1].loadFromFile("assets/bird-up.png");
+    flappy.texture[2].loadFromFile("assets/bird-mid.png");
+    flappy.texture[3].loadFromFile("assets/bird-down.png");
+    flappy.sprite.setScale(2.0f, 2.0f);
     flappy.sprite.setTexture(flappy.texture[1]);
     flappy.sprite.setPosition(flappy.x, flappy.y);
     flappy.flapBuffer.loadFromFile("audio/flap.wav");

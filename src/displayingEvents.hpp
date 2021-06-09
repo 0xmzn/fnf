@@ -57,6 +57,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 else if (Keyboard::isKeyPressed(Keyboard::Escape))
                 {
                     gameLevel = gameStates[3]; // Over
+                    flappy.highscoreSound.stop(); // stop high score sound if it was playing
                     isPaused = false;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::P))
@@ -67,7 +68,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
             break;
         case Event::KeyReleased:
             if (event.key.code == Keyboard::Key::Up)
-            {
+            {   
                 // if isPaused and IsGameover flags are true ignore the Up command
                 if (!isPaused && !isGameover)
                 {
@@ -115,10 +116,10 @@ void displayBackground(RenderWindow &window)
 void displayIntroBird(RenderWindow &window)
 {
     Texture bird;
-    bird.loadFromFile("assets/gnu.png");
+    bird.loadFromFile("assets/bird-mid.png");
     Sprite flappyBird(bird);
-    flappyBird.setPosition(WID - 50, HEI + 200);
-    flappyBird.setScale(0.5f, 0.5f);
+    flappyBird.setPosition(WID - 35, HEI + 200);
+    flappyBird.setScale(2.5f, 2.5f);
     window.draw(flappyBird);
 }
 
