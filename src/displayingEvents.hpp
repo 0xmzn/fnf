@@ -74,7 +74,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
             if (event.key.code == Keyboard::Key::Up)
             {   
                 // if isPaused and IsGameover flags are true ignore the Up command
-                if (!isPaused && !isGameover)
+                if (gameLevel != gameStates[3])
                 {
                     flappy.velocity = flappy.jumpAcc;
                     // Prevent going out of frame
