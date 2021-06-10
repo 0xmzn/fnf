@@ -187,13 +187,13 @@ int main()
 
                 window.clear();
                 window.draw(background);
-                displayScore(window, score);
                 window.draw(flappy.sprite);
 
                 for (auto i : pipes)
                 {
                     window.draw(i);
                 }
+                displayScore(window, score);
                 window.display();
 
                 // Calculate Score
