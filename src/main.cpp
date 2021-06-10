@@ -27,7 +27,7 @@ int main()
     loadFlappy();
     loadPipe();
     txtHighscore();
-
+    
     // Game Loop
     while (window.isOpen())
     {
