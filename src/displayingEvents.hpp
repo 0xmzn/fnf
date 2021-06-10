@@ -62,6 +62,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                     gameLevel = gameStates[3];    // Over
                     flappy.highscoreSound.stop(); // stop high score sound if it was playing
                     isPaused = false;
+                    isHighscore = false;
                 }
                 else if (Keyboard::isKeyPressed(Keyboard::P))
                 {

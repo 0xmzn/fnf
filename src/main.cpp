@@ -37,9 +37,10 @@ int main()
         // Startscreen or if esc is pressed
         if (gameLevel == gameStates[3])
         {
+
             // reset to default
             pipeRate = 150, gap = 225, flappy.isAlive = 1, frames = 0;
-            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false, firstTime = false, isHighscore = false;
+            isPaused = false, pauseSoundPlayed = false, highscoreSoundPlayed = false, checkedHighscore = false, firstTime = false;
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
             pipes.clear();
@@ -54,6 +55,7 @@ int main()
                     //stop sounds while playing if the user pressed the escape button
                     flappy.collide.stop();
                     isGameover = false;
+                    isHighscore = false;
                 }
             }
             // Displays Main Menu Screen if isGameover flag is false
