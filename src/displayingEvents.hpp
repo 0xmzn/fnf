@@ -22,7 +22,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
             break;
         // Toggle Deafen
         case Event::KeyPressed:
-            // Mute 
+            // Mute
             if (Keyboard::isKeyPressed(Keyboard::D))
             {
                 isMuted = !isMuted;
@@ -44,7 +44,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
             // Quit
             if (Keyboard::isKeyPressed(Keyboard::Q))
                 window.close();
-            
+
             if (isGameover)
             {
                 gameLevel = gameStates[3]; // Over
@@ -59,7 +59,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                     gameLevel = gameStates[2]; // Hard
                 else if (Keyboard::isKeyPressed(Keyboard::Escape))
                 {
-                    gameLevel = gameStates[3]; // Over
+                    gameLevel = gameStates[3];    // Over
                     flappy.highscoreSound.stop(); // stop high score sound if it was playing
                     isPaused = false;
                 }
@@ -69,12 +69,12 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 }
             }
             break;
-        // flappy Motion 
+        // flappy Motion
         case Event::KeyReleased:
             if (event.key.code == Keyboard::Key::Up)
-            {   
+            {
                 // if isPaused and IsGameover flags are true ignore the Up command
-                if (gameLevel != gameStates[3])
+                if (gameLevel != gameStates[3] && !isPaused && !isGameover)
                 {
                     flappy.velocity = flappy.jumpAcc;
                     // Prevent going out of frame

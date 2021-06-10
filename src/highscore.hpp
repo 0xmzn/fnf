@@ -12,7 +12,7 @@ void txtHighscore()
 
     bool lvlEasy = true, lvlMedium = true, lvlHard = true;
 
-    // r/w into .easy.txt 
+    // r/w into .easy.txt
     ifstream readFileEasy;
     readFileEasy.open(".easy.txt");
     if (readFileEasy.is_open())

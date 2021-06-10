@@ -27,7 +27,7 @@ int main()
     loadFlappy();
     loadPipe();
     txtHighscore();
-    
+
     // Game Loop
     while (window.isOpen())
     {
@@ -146,15 +146,15 @@ int main()
                     float fw = 34.0 * flappy.sprite.getScale().x, fh = 24.0 * flappy.sprite.getScale().y; // bird width and high scaled
 
                     px = i.getPosition().x;
-                    pw = 150 * i.getScale().x; // pipe width
+                    pw = 150 * i.getScale().x; // pipe width scaled
                     if (i.getScale().y > 0)
                     {
                         py = i.getPosition().y;
-                        ph = 800 * i.getScale().y; // pipe height
+                        ph = 800 * i.getScale().y; // pipe height scaled
                     }
                     else
                     {
-                        ph = -800 * i.getScale().y; // pipe height
+                        ph = -800 * i.getScale().y; // pipe height scaled
                         py = i.getPosition().y - ph;
                     }
 
@@ -162,7 +162,7 @@ int main()
                     if (isColliding(fx, fy, fw, fh, px, py, pw, ph) || hitGround(fy))
                     {
                         flappy.isAlive = false;
-                        // Save Highscore
+                        // Save Highscore before closing
                         Highscore(score, userHighScore, gameLevel, isHighscore);
                     }
                 }
@@ -198,8 +198,8 @@ int main()
                 displayScore(window, score);
                 window.display();
 
-                // Calculate Score
-
+                // score
+                // check if it is first time for user
                 if (!checkedHighscore)
                 {
                     Highscore(score, userHighScore, gameLevel, isHighscore);
@@ -207,25 +207,26 @@ int main()
                     if (userHighScore == 0)
                         firstTime = true;
                 }
-
+                // check if achieved highscore
                 if (score > userHighScore)
                 {
                     userHighScore = score;
                     isHighscore = true;
                 }
+                //  play highscore sound
                 if (isHighscore && !highscoreSoundPlayed && !firstTime)
                 {
                     flappy.highscoreSound.play();
                     highscoreSoundPlayed = true;
                 }
-
+                // calculate score
                 for (int i = 0; i < pipes.size(); i++)
                 {
-                    // check if bird position exceeds pipe position + its scaled width
+                    // check if bird position exceeds pipe position + its scaled width to increment score
                     if (flappy.sprite.getPosition().x + 34.0 * flappy.sprite.getScale().x > pipes[i].getPosition().x + 150.0 * pipes[i].getScale().x && !markedPipes[i] && !markedPipes[i + 1])
                     {
                         score++;
-                        markedPipes[i] = 1, markedPipes[i + 1] = 1;
+                        markedPipes[i] = 1, markedPipes[i + 1] = 1; // mark pipes
                         break;
                     }
                 }
@@ -237,15 +238,15 @@ int main()
             else
             {
                 // Pause sound when gamae is paused
-                if(flappy.highscoreSound.getStatus() == SoundSource::Playing)
+                if (flappy.highscoreSound.getStatus() == SoundSource::Playing)
                     flappy.highscoreSound.pause();
-                
+
                 if (!pauseSoundPlayed)
                 {
                     flappy.pauseSound.play();
                     pauseSoundPlayed = 1;
                 }
-                
+                // Pause
                 window.clear();
                 window.draw(background);
                 displayScore(window, score);
