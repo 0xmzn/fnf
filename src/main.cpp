@@ -41,6 +41,7 @@ int main()
             flappy.x = 150, flappy.y = 200, flappy.velocity = 0;
             flappy.sprite.setPosition(flappy.x, flappy.y);
             pipes.clear();
+            markedPipes.clear();
 
             // Displays Game Over Screen if isGameover flag is true
             if (isGameover)
@@ -102,7 +103,7 @@ int main()
                     pipes.push_back(pipeUp.sprite);
 
                     // clear map for scoring
-                    markedPipes.clear();
+                   // markedPipes.clear();
                 }
 
                 // simulate moving
@@ -112,9 +113,10 @@ int main()
                 }
 
                 // animate bird
-                if (frames % 30 == 0) {
-                flappy.texCounter += 1;
-                flappy.texCounter = flappy.texCounter == 4 ? 0 : flappy.texCounter;
+                if (frames % 30 == 0)
+                {
+                    flappy.texCounter += 1;
+                    flappy.texCounter = flappy.texCounter == 4 ? 0 : flappy.texCounter;
                 }
 
                 flappy.sprite.setTexture(flappy.texture[flappy.texCounter]);
@@ -131,6 +133,7 @@ int main()
                         {
                             break;
                         }
+                        markedPipes[endIterator-startIterator] = 0;
                     }
 
                     pipes.erase(startIterator, endIterator);
@@ -217,10 +220,10 @@ int main()
                     highscoreSoundPlayed = true;
                 }
 
-                for (int i = 0; i < pipes.size(); i++)
+                for (int i = 0; i < pipes.size()-1; i++)
                 {
                     // check if bird position exceeds pipe position + its scaled width
-                    if (flappy.sprite.getPosition().x > pipes[i].getPosition().x + 150.0 * pipes[i].getScale().x && !markedPipes[i] && !markedPipes[i + 1])
+                    if (flappy.sprite.getPosition().x+34.0*flappy.sprite.getScale().x > pipes[i].getPosition().x + 150.0 * pipes[i].getScale().x && !markedPipes[i] && !markedPipes[i + 1])
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
