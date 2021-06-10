@@ -101,9 +101,6 @@ int main()
                     // push pipes to the vector
                     pipes.push_back(pipeDown.sprite);
                     pipes.push_back(pipeUp.sprite);
-
-                    // clear map for scoring
-                   // markedPipes.clear();
                 }
 
                 // simulate moving
@@ -133,7 +130,8 @@ int main()
                         {
                             break;
                         }
-                        markedPipes[endIterator-startIterator] = 0;
+                        // clear map for scoring
+                        markedPipes[endIterator - startIterator] = 0;
                     }
 
                     pipes.erase(startIterator, endIterator);
@@ -220,10 +218,10 @@ int main()
                     highscoreSoundPlayed = true;
                 }
 
-                for (int i = 0; i < pipes.size()-1; i++)
+                for (int i = 0; i < pipes.size(); i++)
                 {
                     // check if bird position exceeds pipe position + its scaled width
-                    if (flappy.sprite.getPosition().x+34.0*flappy.sprite.getScale().x > pipes[i].getPosition().x + 150.0 * pipes[i].getScale().x && !markedPipes[i] && !markedPipes[i + 1])
+                    if (flappy.sprite.getPosition().x + 34.0 * flappy.sprite.getScale().x > pipes[i].getPosition().x + 150.0 * pipes[i].getScale().x && !markedPipes[i] && !markedPipes[i + 1])
                     {
                         score++;
                         markedPipes[i] = 1, markedPipes[i + 1] = 1;
