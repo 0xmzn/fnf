@@ -22,6 +22,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
             break;
         // Toggle Deafen
         case Event::KeyPressed:
+            // Mute 
             if (Keyboard::isKeyPressed(Keyboard::D))
             {
                 isMuted = !isMuted;
@@ -40,8 +41,10 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                     flappy.pauseSound.setVolume(100);
                 }
             }
+            // Quit
             if (Keyboard::isKeyPressed(Keyboard::Q))
                 window.close();
+            
             if (isGameover)
             {
                 gameLevel = gameStates[3]; // Over
@@ -66,6 +69,7 @@ void handleEvent(RenderWindow &window, Event &event, bool &isPaused, bool &isGam
                 }
             }
             break;
+        // flappy Motion 
         case Event::KeyReleased:
             if (event.key.code == Keyboard::Key::Up)
             {   

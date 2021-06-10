@@ -20,8 +20,10 @@ int main()
     backgroundImage.loadFromFile("assets/background.png");
     Sprite background(backgroundImage);
 
-    // load things
+    // map used in calculating scores
     map<int, bool> markedPipes;
+
+    // load things
     loadFlappy();
     loadPipe();
     txtHighscore();
@@ -133,7 +135,6 @@ int main()
                         // clear map for scoring
                         markedPipes[endIterator - startIterator] = 0;
                     }
-
                     pipes.erase(startIterator, endIterator);
                 }
 
@@ -235,11 +236,16 @@ int main()
             // Pause Game if isPaused flag is true
             else
             {
+                // Pause sound when gamae is paused
+                if(flappy.highscoreSound.getStatus() == SoundSource::Playing)
+                    flappy.highscoreSound.pause();
+                
                 if (!pauseSoundPlayed)
                 {
                     flappy.pauseSound.play();
                     pauseSoundPlayed = 1;
                 }
+                
                 window.clear();
                 window.draw(background);
                 displayScore(window, score);
